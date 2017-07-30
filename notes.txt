@@ -1,0 +1,31 @@
+- BigSQL postgresql
+
+- Set-ExecutionPolicy remotesigned
+
+- pgdevops
+
+- https://github.com/bpatters/graphiql-feen
+- https://chrome.google.com/webstore/detail/graphiql-feen/mcbfdonlkfpbfdpimkjilhdneikhfklp
+
+- iex.bat -S mix
+
+- mix phoenix.gen.model HistoryItem history_items date:string
+- mix phoenix.gen.model HistoryItemField history_item_fields name value:integer history_item_id:references:history_items
+- mix ecto.migrate
+
+- IO.inspect history_item_fields_errors, label: "HistoryItemFieldsErrors", char_lists: false
+
+
+- http://www.phoenixframework.org/docs/heroku
+- https://github.com/techgaun/heroku-buildpack-elixir
+ENV_HOST_NAME = payments-be.example.com
+ENV_DB_NAME = payments
+ENV_TYPE = prod
+MIX_ENV = prod
+mix phoenix.gen.secret -> ENV_SECRET_KEY_BASE = 9ULl2vEtZKB8to1wAsF+
+
+dokku config:set payments-be ENV_DB_NAME=payments ENV_TYPE=prod MIX_ENV=prod ENV_HOST_NAME=payments-be.example.com ENV_SECRET_KEY_BASE=9ULl2vvsyOtJW5
+
+dokku letsencrypt payments-be
+
+deploy!!!
